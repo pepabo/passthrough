@@ -18,10 +18,32 @@ Passthrough.open(:db)
 # You can create multiple connections like below
 Passthrough.create(:search, 'gateway.example.com', 'readonly-user')
 Passthrough.set(:search, :host, 'search.example.com')
-Passthrough.set(:search, :port, 9200)
+Passthrough.set(:search, :port, 8983)
 
 # Same as above
 Passthrough.open(:search)
+```
+
+Use the sets of host and port in some config file.
+
+`database.yml` of Rails:
+
+```yaml
+remote:
+  database: example_database
+  username: readonly_user
+  password: ****************
+  host:     <%= Passthrough.get(:db, :host) %>
+  port:     <%= Passthrough.get(:db, :port) %>
+```
+
+`sunspot.yml` for Solr:
+
+```yaml
+remote:
+  solr:
+    hostname: <%= Passthrough.get(:search, :host) %>
+    port:     <%= Passthrough.get(:search, :port) %>
 ```
 
 ## Description
